@@ -1,4 +1,5 @@
 const inquirer = require('inquirer');
+const { writeFile, copyFile } = require('./utils/generate-site.js');
 const promptUser = () => {
   return inquirer.prompt([
     {
@@ -46,7 +47,7 @@ const promptUser = () => {
             return false;
           }
           }
-        }
+        },
 
   ]);
 };
@@ -131,40 +132,24 @@ return inquirer.prompt([
   });
 };
 
-promptUser()
-.then(promptProject)
+promptUser() // 1
+.then(promptProject) // 2
 .then(portfolioData => {
-  const pageHTML = generatePage(portfolioData);
-  fs.writeFile('./index.html', pageHTML, err => {
-    if (err) throw new Error(err);
-    
-  });
+  return generatePage(portfolioData); // 3
+})
+.then(pageHTML => {
+  return fs.writeFile(pageHTML); // 4
+})
+.then(writeFileResponse => {
+  console.log(writeFileResponse); // 5
+  return copyFile(); 
+})
+.then(copyFileResponse => {
+  console.log(copyFileResponse); // 6
+})
+.catch(err => {
+  console.log(err);
 });
 
 const fs = require('fs');
 const generatePage = require('./src/page-template.js');
-
-
-
-
-// const pageHTML = generatePage(name,github);
-
-
-// // const printProfileData = profileDataArr => {
-// //   // This...
-// //   for (let i = 0; i < profileDataArr.length; i += 1) {
-// //     console.log(profileDataArr[i]);
-// //   }
-
-// //   console.log('================');
-
-// //   // Is the same as this...
-// //   profileDataArr.forEach(profileItem => console.log(profileItem));
-// // };
-
-
-
-// fs.writeFile('./index.html', pageHTML, err => {
-//   if (err) throw err;
-//   console.log('Portfolio complete! Check out index.html to see the output!');
-// });
