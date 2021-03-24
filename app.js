@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 const inquirer = require('inquirer');
 const { writeFile, copyFile } = require('./utils/generate-site.js');
 const promptUser = () => {
@@ -153,3 +154,6 @@ promptUser() // 1
 
 const fs = require('fs');
 const generatePage = require('./src/page-template.js');
+=======
+console.log('Hello Node!');
+>>>>>>> 9efad3e51e48bc91084ecf502ac653daa54e2207
